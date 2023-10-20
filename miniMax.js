@@ -3,12 +3,69 @@ var player = 0;
 computerMove();
 
 function computerMove() {
-  for (var i = 0; i < 9; i++) {
-    if (board[i] == undefined) {
-      board[i] = 0;
-      updateBoard();
-      return;
+  let bestScore = -1000000;
+  let bestMove = 0;
+  for (let i = 0; i < 9; i++) {    
+      if (board[i] == undefined) {
+        board[i] = 0;
+        let score = miniMax(board, 0, false);
+        board[i] = undefined;        
+        if (score > bestScore) {
+          bestScore = score;
+          bestMove = i;
+        }
+      }
+  }
+  board[bestMove] = 0;
+  updateBoard()
+}
+
+
+function scores(num) {
+  if(num == 0) {
+    return 10
+  }
+  else if(num == 1) {
+    return -10
+  }
+  else if(num == 5) {
+    return 0
+  }
+}
+
+
+function miniMax(board, depth, isMaximizing) {
+  let result = checkGameOver(board);
+  if (result != 3) {    
+    return scores(result);    
+  }
+  if (isMaximizing) {
+    let bestScore = -1000000;
+    for(var i = 0; i < 9; i++) {
+      if(board[i] == undefined) {
+        board[i] = 0
+        let score = miniMax(board, depth + 1, false);
+        board[i] = undefined;
+        if(score > bestScore){
+          bestScore = score
+        }
+      }
     }
+    return bestScore;
+  }
+  else {
+    let bestScore = 1000000;
+    for(var i = 0; i < 9; i++) {
+      if(board[i] == undefined) {
+        board[i] = 1
+        let score = miniMax(board, depth + 1, true);
+        board[i] = undefined;
+        if(score < bestScore) {
+          bestScore = score
+        }
+      }
+    }
+    return bestScore;
   }
 }
 
@@ -17,16 +74,16 @@ function updateBoard() {
   for (var i = 0; i < 9; i++) {
     let innerElement = document.createElement("p");
     if (board[i] == 0) {
-      innerElement.innerHTML = "X";
-    } else if (board[i] == 1) {
       innerElement.innerHTML = "O";
+    } else if (board[i] == 1) {
+      innerElement.innerHTML = "X";
     } else {
       innerElement.innerHTML = "-";
     }
     elements[i].innerHTML = "";
     elements[i].append(innerElement);
   }
-  if (checkGameOver(board) == -1) {
+  if (checkGameOver(board) == 3) {
     if (player == 0) {
       player = 1;
     } else {
@@ -39,7 +96,7 @@ function updateBoard() {
 }
 
 function playerClick(index) {
-  if (checkGameOver(board) != -1) {
+  if (checkGameOver(board) != 3) {
     return;
   }
   if (board[index] != undefined) {
@@ -100,10 +157,10 @@ function checkGameOver(gameBoard) {
     return gameBoard[2];
   } else {
     for (var i = 0; i < 9; i++) {
-      if (board[i] == undefined) {
-        return -1;
+      if (gameBoard[i] == undefined) {
+        return 3;
       }
     }
   }
-  return -2;
+  return 5;
 }
