@@ -6,6 +6,8 @@ This project implements the classic game of Tic Tac Toe with an AI opponent powe
 
 ## Overview
 
+![Image](https://github.com/vivek-i/ai-tictactoe/blob/master/game.png?raw=true)
+
 - The game allows a human player to compete against a computer opponent.
 - The computer opponent employs the Minimax algorithm to make intelligent moves and provide a challenging gameplay experience.
 - Written with basic Javascript, HTML, and CSS
