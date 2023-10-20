@@ -83,7 +83,8 @@ function updateBoard() {
     elements[i].innerHTML = "";
     elements[i].append(innerElement);
   }
-  if (checkGameOver(board) == 3) {
+  gameResult = checkGameOver(board)
+  if (gameResult == 3) {
     if (player == 0) {
       player = 1;
     } else {
@@ -91,7 +92,17 @@ function updateBoard() {
       computerMove();
     }
   } else {
-    document.getElementById("gameState").style.visibility = "visible";
+    resultElement = document.getElementById("gameState")
+    if(gameResult == 0) {
+      resultElement.innerHTML = "Computer Wins!"
+    }
+    else if(gameResult == 1) {
+      resultElement.innerHTML = "You Win!"
+    }
+    else {
+      resultElement.innerHTML = "Tie!"
+    }
+    resultElement.style.visibility = "visible";
   }
 }
 
