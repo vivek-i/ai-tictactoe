@@ -74,9 +74,9 @@ function updateBoard() {
   for (var i = 0; i < 9; i++) {
     let innerElement = document.createElement("p");
     if (board[i] == 0) {
-      innerElement.innerHTML = "O";
-    } else if (board[i] == 1) {
       innerElement.innerHTML = "X";
+    } else if (board[i] == 1) {
+      innerElement.innerHTML = "O";
     } else {
       innerElement.innerHTML = "-";
     }
@@ -92,7 +92,7 @@ function updateBoard() {
       computerMove();
     }
   } else {
-    resultElement = document.getElementById("gameState")
+    resultElement = document.createElement('h1')
     if(gameResult == 0) {
       resultElement.innerHTML = "Computer Wins!"
     }
@@ -102,7 +102,7 @@ function updateBoard() {
     else {
       resultElement.innerHTML = "Tie!"
     }
-    resultElement.style.visibility = "visible";
+    document.getElementById('gameContainer').appendChild(resultElement)
   }
 }
 
