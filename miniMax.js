@@ -1,10 +1,12 @@
+
+
 var board = new Array(9);
 var player = 0;
 computerMove();
 
 function computerMove() {
   let bestScore = -1000000;
-  let bestMove = 0;
+  let bestMoves = [];
   for (let i = 0; i < 9; i++) {    
       if (board[i] == undefined) {
         board[i] = 0;
@@ -12,12 +14,21 @@ function computerMove() {
         board[i] = undefined;        
         if (score > bestScore) {
           bestScore = score;
-          bestMove = i;
+          bestMoves = []
+          bestMoves.push(i)
+        }
+        else if (score == bestScore) {
+          bestMoves.push(i)
         }
       }
   }
-  board[bestMove] = 0;
+  board[getRandomValueFromArray(bestMoves)] = 0;
   updateBoard()
+}
+
+function getRandomValueFromArray(arr) {
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 }
 
 
@@ -175,3 +186,4 @@ function checkGameOver(gameBoard) {
   }
   return 5;
 }
+
